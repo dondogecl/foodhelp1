@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-const config = require('./config/env');
+const config = require('./env');
 const { HOST, USER, PWD, DB } = config;
 
 const pool = mysql
@@ -11,4 +11,4 @@ const pool = mysql
   })
   .promise();
 
-export default pool;
+module.exports = pool;
