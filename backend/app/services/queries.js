@@ -26,7 +26,13 @@ async function getAllIngredients() {
 }
 
 async function getAllRecipes() {
-  // Fill
+  const [rows] = await pool.query(
+    `SELECT r.id, r.name, rc.category_name, r.likes, r.dislike, r.recipe_photo, r.recipe_description
+    FROM recipes r 
+    JOIN recipe_categories rc ON r.recipe_categoryid = rc.id;`
+  );
+  console.log(rows);
+  return rows;
 }
 
 async function getRecipe(id) {

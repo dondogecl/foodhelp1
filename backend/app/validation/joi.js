@@ -8,4 +8,8 @@ const ingredientSchema = Joi.object({
   ingredient_photo: Joi.string().max(50).required(),
 });
 
+// Please add validation for Adding Recipe
+// Please add validation for ingredient category
+// Please add validation for recipe category
+
 module.exports = { ingredientSchema };
