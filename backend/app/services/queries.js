@@ -53,6 +53,7 @@ async function getRecipeCategory(id) {
   // Fill
 }
 
+
 //Create query to INSERT  new recipes into the Recipe Table - DAN
 export async function insertNewRecipe() 
 {
@@ -103,3 +104,16 @@ export async function findExistingIngredientByName()
 
 
 module.exports = { getIngredient, getAllIngredients };
+
+module.exports = {
+  getIngredient,
+  getAllIngredients,
+  getAllRecipes,
+  getRecipe,
+  getRecipeIngredients,
+  getIngredientCategories,
+  getRecipeCategories,
+  getIngredientCategory,
+  getRecipeCategory,
+};
+
