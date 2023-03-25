@@ -1,4 +1,6 @@
-export async function getIngredient(id) {
+const pool = require('../config/database');
+
+async function getIngredient(id) {
   const [rows] = await pool.query(
     `SELECT i.id, category_name, name, calories, price 
       FROM ingredients i 
@@ -13,9 +15,9 @@ export async function getIngredient(id) {
   return rows[0];
 }
 
-export async function getAllIngredients() {
+async function getAllIngredients() {
   const [rows] = await pool.query(
-    `SELECT i.id, category_name, name, calories, price 
+    `SELECT i.id, ingredient_category, name, calories, price, ingredient_category, ingredient_photo
     FROM ingredients i 
     JOIN ingredient_category ic ON i.ingredient_category = ic.id;`
   );
@@ -23,30 +25,32 @@ export async function getAllIngredients() {
   return rows;
 }
 
-export async function getAllRecipes() {
+async function getAllRecipes() {
   // Fill
 }
 
-export async function getRecipe(id) {
+async function getRecipe(id) {
   // Fill
 }
 
-export async function getRecipeIngredients() {
+async function getRecipeIngredients() {
   // Fill
 }
 
-export async function getIngredientCategories() {
+async function getIngredientCategories() {
   // Fill;
 }
 
-export async function getIngredientCategory(id) {
+async function getIngredientCategory(id) {
   // Fill
 }
 
-export async function getRecipeCategories() {
+async function getRecipeCategories() {
   // Fill
 }
 
-export async function getRecipeCategory(id) {
+async function getRecipeCategory(id) {
   // Fill
 }
+
+module.exports = { getIngredient, getAllIngredients };
