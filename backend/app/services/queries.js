@@ -36,7 +36,17 @@ async function getAllRecipes() {
 }
 
 async function getRecipe(id) {
-  // Fill
+  const [rows] = await pool.query(
+    `SELECT id, name, recipe_categoryid, likes, dislike, recipe_photo, recipe_description 
+      FROM recipes 
+      WHERE id = ?`,
+    [id]
+  );
+  /* NOTE: This always return an array. Since the query will only
+    return one element in an array, he is a better practice to just
+    return the first element through index. */
+  console.log(rows[0]);
+  return rows[0];
 }
 
 async function getRecipeIngredients() {
@@ -44,19 +54,33 @@ async function getRecipeIngredients() {
 }
 
 async function getIngredientCategories() {
-  // Fill;
+  const [rows] = await pool.query(`SELECT * FROM ingredient_category`);
+  console.log(rows);
+  return rows;
 }
 
 async function getIngredientCategory(id) {
-  // Fill
+  const [rows] = await pool.query(`SELECT * FROM ingredient_category WHERE id = ?`, [id]);
+  /* NOTE: This always return an array. Since the query will only
+    return one element in an array, he is a better practice to just
+    return the first element through index. */
+  console.log(rows[0]);
+  return rows[0];
 }
 
 async function getRecipeCategories() {
-  // Fill
+  const [rows] = await pool.query(`SELECT * FROM recipe_categories`);
+  console.log(rows);
+  return rows;
 }
 
 async function getRecipeCategory(id) {
-  // Fill
+  const [rows] = await pool.query(`SELECT * FROM recipe_categories WHERE id = ?`, [id]);
+  /* NOTE: This always return an array. Since the query will only
+    return one element in an array, he is a better practice to just
+    return the first element through index. */
+  console.log(rows[0]);
+  return rows[0];
 }
 
 
