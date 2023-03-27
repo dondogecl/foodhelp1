@@ -10,7 +10,7 @@ function Header() {
     <>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" to="#">
             <img src="images/logo.png" alt="Food+ Logo" />
           </a>
           <button
@@ -27,24 +27,24 @@ function Header() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto text-center">
               <li className="nav-item px-2">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="#">
                   Browse Recipes
-                </a>
+                </Link>
               </li>
               <li className="nav-item px-2">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="#">
                   Cooking Assistant
-                </a>
+                </Link>
               </li>
               <li className="nav-item px-2">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/create-recipe">
                   Create Recipe
-                </a>
+                </Link>
               </li>
               <li className="nav-item px-2">
-                <a className="btn btn-primary" href="#">
+                <Link className="btn btn-primary" to="#">
                   Log In
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
