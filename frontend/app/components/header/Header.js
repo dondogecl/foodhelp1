@@ -10,9 +10,9 @@ function Header() {
     <>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
-          <a className="navbar-brand" to="#">
-            <img src="images/logo.png" alt="Food+ Logo" />
-          </a>
+          <Link className="navbar-brand" to="/">
+            <img src="public/images/logo.png" alt="Food+ Logo" />
+          </Link>
           <button
             className="navbar-toggler"
             type="button"

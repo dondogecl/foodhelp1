@@ -35,6 +35,17 @@ function CreateRecipe() {
 
   return (
     <div className="container">
+      <div className="jumbotron">
+        <h1 className="display-4">Post your recipe</h1>
+        <hr className="my-4" />
+        <p>Use the form below to create and publish your recipe. Please specify a name and select the ingredients from the list, so it can be found by users who want to cook using some of
+          the same ingredients.
+        </p>
+        <p>
+          You can also add your own image of the recipe. If you want to edit or delete any recipe posted, you will be able to do it from your profile.
+        </p>
+      </div>
+      
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Recipe Name</label>
