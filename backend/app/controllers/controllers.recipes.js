@@ -1,6 +1,16 @@
-const { getAllIngredients, getIngredient } = require('../services/queries');
-const { insertIngredient } = require('../services/insertions');
-const { ingredientSchema } = require('../validation/joi');
+const {
+  getAllIngredients,
+  getIngredient,
+  getRecipeCategory,
+  getRecipeCategories,
+  getAllRecipes,
+  getIngredientCategory,
+  getRecipeIngredients,
+  getIngredientCategories,
+  getRecipe,
+} = require('../services/queries');
+const { insertIngredient, insertNewRecipe } = require('../services/insertions');
+const { ingredientSchema, recipeSchema } = require('../validation/joi');
 
 exports.getAllRecipes = async (req, res, next) => {
   try {
@@ -20,44 +30,10 @@ exports.getRecipeCategories = async (req, res, next) => {
   }
 };
 
-exports.getRecipeCategory = async (req, res, next) => {
-  try {
-    const { error, value } = recipeCategorySchema.validate(req.body);
-
-    if (error) {
-      res.status(400);
-      next(new Error(error.details[0].message));
-    }
-
-    const {id} = value;
-    const [result] = await getRecipeCategory(id);
-    res.json(result);
-  } catch (error) {
-    next(error);
-  }
-};
-
 exports.getRecipeIngredients = async (req, res, next) => {
   try {
     const result = await getRecipeIngredients();
     res.json(result);
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.addRecipe = async (req, res, next) => {
-  try {
-    const { error, value } = recipeSchema.validate(req.body);
-
-    if (error) {
-      res.status(400);
-      next(new Error(error.details[0].message));
-    }
-
-    // Awaiting frontend confirmation
-
-    res.json();
   } catch (error) {
     next(error);
   }
@@ -81,18 +57,59 @@ exports.getIngredientCategories = async (req, res, next) => {
   }
 };
 
+exports.getRecipeCategory = async (req, res, next) => {
+  try {
+    const { categoryId } = req.params;
+    if (!categoryId) {
+      res.status(400);
+      next(new Error('categoryId is invalid'));
+    }
+
+    const [result] = await getRecipeCategory(categoryId);
+    if (!result) {
+      next(new Error("category doesn't exist"));
+    }
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.getIngredientCategory = async (req, res, next) => {
   try {
-    const { error, value } = ingredientCategorySchema.validate(req.body);
+    const { ingredientId } = req.params;
+    if (!ingredientId) {
+      res.status(400);
+      next(new Error('ingredientId is invalid'));
+    }
+
+    const [result] = await getIngredientCategory(ingredientId);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.addRecipe = async (req, res, next) => {
+  try {
+    const { error, value } = recipeSchema.validate(req.body);
 
     if (error) {
       res.status(400);
       next(new Error(error.details[0].message));
     }
 
-    const {id} = value;
-    const [result] = await getIngredientCategory(id);
-    res.json(result);
+    const { name, recipe_categoryid, recipe_photo, recipe_description } = value;
+
+    // Awaiting frontend confirmation
+    const [result] = await insertNewRecipe(
+      name,
+      recipe_categoryid,
+      recipe_photo,
+      recipe_description
+    );
+    const recipe = await getRecipe(result.insertId);
+    res.json(recipe);
   } catch (error) {
     next(error);
   }
