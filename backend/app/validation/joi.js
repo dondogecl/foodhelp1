@@ -29,8 +29,6 @@ const ingredientCategoryWithIdSchema = Joi.object({
 const recipeSchema = Joi.object({
   name: Joi.string().max(50).required(),
   recipe_categoryid: Joi.number().integer().required(),
-  likes: Joi.number().integer().required(),
-  dislikes: Joi.number().integer().required(),
   recipe_photo: Joi.string().max(50).required(),
   recipe_description: Joi.string().required(),
 });
@@ -45,6 +43,15 @@ const recipeSchemaWithId = Joi.object({
   recipe_description: Joi.string().required(),
 });
 
+const recipeCategorySchemaWithId = Joi.object({
+  id: Joi.number().integer().required(),
+  category_name: Joi.string().max(50).required(),
+});
+
+const recipeCategorySchema = Joi.object({
+  category_name: Joi.string().max(50).required(),
+});
+
 module.exports = {
   ingredientSchema,
   ingredientWithIdSchema,
@@ -52,4 +59,6 @@ module.exports = {
   ingredientCategoryWithIdSchema,
   recipeSchema,
   recipeSchemaWithId,
+  recipeCategorySchema,
+  recipeCategorySchemaWithId,
 };
