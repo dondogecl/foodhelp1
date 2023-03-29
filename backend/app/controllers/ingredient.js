@@ -40,7 +40,7 @@ exports.addIngredient = async (req, res, next) => {
 
     if (error) {
       res.status(400);
-      next(new Error(error.details[0].message));
+      return next(new Error(error.details[0].message));
     }
 
     const { insertId } = await sql.insertIngredient(value);

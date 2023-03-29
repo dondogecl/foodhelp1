@@ -1,6 +1,5 @@
 const sql = require('../../config/database');
 
-/* TODO: Performance Bug */
 async function findRecipeIngredientsById(id) {
   const [rows] = await sql.query(
     `SELECT ri.id, r.name as recipe_name, i.name as ingredient_name, category_name, calories, price
@@ -11,7 +10,6 @@ async function findRecipeIngredientsById(id) {
     WHERE r.id = ?;`,
     [id]
   );
-  console.log(rows);
   return rows;
 }
 
