@@ -28,24 +28,6 @@ async function getRecipeIngredients() {
   // Fill
 }
 
-async function getIngredientCategories() {
-  const [rows] = await pool.query(`SELECT * FROM ingredient_category`);
-  console.log(rows);
-  return rows;
-}
-
-async function getIngredientCategory(id) {
-  const [rows] = await pool.query(
-    `SELECT * FROM ingredient_category WHERE id = ?`,
-    [id]
-  );
-  /* NOTE: This always return an array. Since the query will only
-    return one element in an array, he is a better practice to just
-    return the first element through index. */
-  console.log(rows[0]);
-  return rows[0];
-}
-
 async function getRecipeCategories() {
   const [rows] = await pool.query(`SELECT * FROM recipe_categories`);
   console.log(rows);
@@ -111,9 +93,7 @@ module.exports = {
   getAllRecipes,
   getRecipe,
   getRecipeIngredients,
-  getIngredientCategories,
   getRecipeCategories,
-  getIngredientCategory,
   getRecipeCategory,
   updateExistingRecipeById,
   deleteExistingRecipeById,
