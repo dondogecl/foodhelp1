@@ -6,16 +6,25 @@ const {
 } = require('./tables/ingredient');
 
 const {
-  getRecipeCategory,
-  getRecipeCategories,
-  getAllRecipes,
-  getIngredientCategory,
-  getRecipeIngredients,
-  getIngredientCategories,
-  getRecipe,
-} = require('./tables/queries');
+  findAllIngredientCategories,
+  findIngredientCategoryById,
+  findIngredientCategoryByName,
+} = require('./tables/ingredientCategory');
 
-const { insertNewRecipe } = require('./tables/insertions');
+const {
+  findAllRecipeCategories,
+  findRecipeCategoryById,
+  findRecipeCategoryByName,
+} = require('./tables/recipeCategory');
+
+const {
+  findAllRecipes,
+  findRecipeById,
+  findRecipeByName,
+  deleteRecipeById,
+  insertNewRecipe,
+  findRecipeIngredientsById,
+} = require('./tables/recipe');
 
 module.exports = {
   /* ingredient.js */
@@ -23,14 +32,19 @@ module.exports = {
   findIngredientByName,
   findAllIngredients,
   insertIngredient,
-  /* queries.js */
-  getRecipeCategory,
-  getRecipeCategories,
-  getAllRecipes,
-  getIngredientCategory,
-  getRecipeIngredients,
-  getIngredientCategories,
-  getRecipe,
-  /* insertions.js */
+  /* ingredientCategory.js */
+  findAllIngredientCategories,
+  findIngredientCategoryById,
+  findIngredientCategoryByName,
+  /* recipeCategory.js */
+  findAllRecipeCategories,
+  findRecipeCategoryById,
+  findRecipeCategoryByName,
+  /* recipe.js */
+  findAllRecipes,
+  findRecipeById,
+  findRecipeByName,
+  deleteRecipeById,
   insertNewRecipe,
+  findRecipeIngredientsById,
 };
