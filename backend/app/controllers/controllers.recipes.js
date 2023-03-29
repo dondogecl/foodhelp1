@@ -1,20 +1,9 @@
-const {
-  getAllIngredients,
-  getIngredient,
-  getRecipeCategory,
-  getRecipeCategories,
-  getAllRecipes,
-  getIngredientCategory,
-  getRecipeIngredients,
-  getIngredientCategories,
-  getRecipe,
-} = require('../services/queries');
-const { insertIngredient, insertNewRecipe } = require('../services/insertions');
+const sql = require('../sql');
 const { ingredientSchema, recipeSchema } = require('../validation/joi');
 
 exports.getAllRecipes = async (req, res, next) => {
   try {
-    const result = await getAllRecipes();
+    const result = await sql.getAllRecipes();
     res.json(result);
   } catch (error) {
     next(error);
@@ -23,7 +12,7 @@ exports.getAllRecipes = async (req, res, next) => {
 
 exports.getRecipeCategories = async (req, res, next) => {
   try {
-    const result = await getRecipeCategories();
+    const result = await sql.getIngredientCategories();
     res.json(result);
   } catch (error) {
     next(error);
@@ -32,7 +21,7 @@ exports.getRecipeCategories = async (req, res, next) => {
 
 exports.getRecipeIngredients = async (req, res, next) => {
   try {
-    const result = await getRecipeIngredients();
+    const result = await sql.getRecipeIngredients();
     res.json(result);
   } catch (error) {
     next(error);
@@ -41,7 +30,7 @@ exports.getRecipeIngredients = async (req, res, next) => {
 
 exports.getAllIngredients = async (req, res, next) => {
   try {
-    const result = await getAllIngredients();
+    const result = await sql.findAllIngredients();
     res.json(result);
   } catch (error) {
     next(error);
@@ -50,7 +39,7 @@ exports.getAllIngredients = async (req, res, next) => {
 
 exports.getIngredientCategories = async (req, res, next) => {
   try {
-    const result = await getIngredientCategories();
+    const result = await sql.getIngredientCategories();
     res.json(result);
   } catch (error) {
     next(error);
@@ -65,7 +54,7 @@ exports.getRecipeCategory = async (req, res, next) => {
       next(new Error('categoryId is invalid'));
     }
 
-    const [result] = await getRecipeCategory(categoryId);
+    const [result] = await sql.getRecipeCategory(categoryId);
     if (!result) {
       next(new Error("category doesn't exist"));
     }
@@ -83,7 +72,7 @@ exports.getIngredientCategory = async (req, res, next) => {
       next(new Error('ingredientId is invalid'));
     }
 
-    const [result] = await getIngredientCategory(ingredientId);
+    const [result] = await sql.getIngredientCategory(ingredientId);
     res.json(result);
   } catch (error) {
     next(error);
@@ -102,13 +91,13 @@ exports.addRecipe = async (req, res, next) => {
     const { name, recipe_categoryid, recipe_photo, recipe_description } = value;
 
     // Awaiting frontend confirmation
-    const [result] = await insertNewRecipe(
+    const [result] = await sql.insertNewRecipe(
       name,
       recipe_categoryid,
       recipe_photo,
       recipe_description
     );
-    const recipe = await getRecipe(result.insertId);
+    const recipe = await sql.getRecipe(result.insertId);
     res.json(recipe);
   } catch (error) {
     next(error);
@@ -124,18 +113,9 @@ exports.addIngredient = async (req, res, next) => {
       next(new Error(error.details[0].message));
     }
 
-    const { ingredient_category, name, calories, price, ingredient_photo } =
-      value;
+    const { insertId } = await sql.insertIngredient(value);
+    const ingredient = await sql.findIngredientById(insertId);
 
-    const [result] = await insertIngredient(
-      ingredient_category,
-      name,
-      calories,
-      price,
-      ingredient_photo
-    );
-
-    const ingredient = await getIngredient(result.insertId);
     res.json(ingredient);
   } catch (error) {
     next(error);

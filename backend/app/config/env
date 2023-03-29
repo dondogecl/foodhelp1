@@ -1,6 +1,0 @@
-#DB CONFIG
-HOST=comp231.ce6kzziqmbfx.us-east-2.rds.amazonaws.com
-USER=admin
-PASSWORD=Comp231
-DB=foodhelperDB
-DIALECT=mysql

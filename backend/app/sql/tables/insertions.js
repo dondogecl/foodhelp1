@@ -1,22 +1,7 @@
-const pool = require('../config/database');
-
-async function insertIngredient(
-  ingredient_category,
-  name,
-  calories,
-  price,
-  ingredient_photo
-) {
-  const result = await pool.query(
-    `INSERT INTO ingredients (ingredient_category, name, calories, price, ingredient_photo)
-     VALUES (?, ?, ?, ?, ?)`,
-    [ingredient_category, name, calories, price, ingredient_photo]
-  );
-  return result;
-}
+const pool = require('../../config/database');
 
 //Create query to INSERT  new recipes into the Recipe Table - DAN
-export async function insertNewRecipe(
+async function insertNewRecipe(
   name,
   recipe_categoryid,
   recipe_photo,
@@ -30,4 +15,4 @@ export async function insertNewRecipe(
   return result;
 }
 
-module.exports = { insertIngredient, insertNewRecipe };
+module.exports = { insertNewRecipe };
