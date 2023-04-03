@@ -3,6 +3,7 @@ const config = require('./app/config/env');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('express-async-errors');
 
 app.use(
   bodyParser.urlencoded({
