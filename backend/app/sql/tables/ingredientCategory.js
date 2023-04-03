@@ -4,7 +4,6 @@ async function findAllIngredientCategories() {
   const [rows] = await sql.query(
     `SELECT id, category_name FROM ingredient_category`
   );
-  console.log(rows);
   return rows;
 }
 
@@ -26,8 +25,19 @@ async function findIngredientCategoryByName(name) {
   return row;
 }
 
+async function insertIngredientCategory(ingredientCategory) {
+  const { category_name } = ingredientCategory;
+  const [insert] = await sql.query(
+    `INSERT INTO ingredient_category (category_name)
+     VALUES (?)`,
+    [category_name]
+  );
+  return insert;
+}
+
 module.exports = {
   findAllIngredientCategories,
   findIngredientCategoryById,
   findIngredientCategoryByName,
+  insertIngredientCategory,
 };

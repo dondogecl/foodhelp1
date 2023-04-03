@@ -13,7 +13,6 @@ app.use(
 app.use(bodyParser.json());
 app.use(cors());
 
-require('./app/routes/index')(app);
 require('./app/routes/recipes')(app);
 require('./app/routes/errors')(app);
 

@@ -4,7 +4,7 @@
 
 Creates a new Ingredient.
 
-### Parameters Body
+### Parameters
 
 | Name                   | Type   | Description              |
 | ---------------------- | ------ | ------------------------ |
@@ -27,11 +27,29 @@ Creates a new Ingredient.
 | ingredient_photo       | String |
 | ingredient_description | String |
 
+## GET /api/getAllIngredients
+
+### Parameters
+
+NONE
+
+### Response <Array>
+
+| Name                   | Type   |
+| ---------------------- | ------ |
+| id                     | PM Int |
+| ingredient_category    | Int    |
+| name                   | String |
+| calories               | Int    |
+| price                  | number |
+| ingredient_photo       | String |
+| ingredient_description | String |
+
 ## GET /api/getIngredientById/:id
 
-### Parameters PARAM
+### Parameters
 
-id
+NONE
 
 ### Response
 
@@ -47,7 +65,7 @@ id
 
 ## GET /api/getIngredientByName
 
-### Parameters Body
+### Parameters
 
 | Name | Type            |
 | ---- | --------------- |
@@ -64,3 +82,72 @@ id
 | price                  | number |
 | ingredient_photo       | String |
 | ingredient_description | String |
+
+## POST /api/addIngredientCategory
+
+### Parameters
+
+| Name          | Type                    |
+| ------------- | ----------------------- |
+| category_name | String max(50) Required |
+
+### Response
+
+| Name          | Type   |
+| ------------- | ------ |
+| id            | PM Int |
+| category_name | String |
+
+## GET /api/getAllIngredientCategories
+
+### Parameters
+
+NONE
+
+### Response <Array>
+
+| Name          | Type   |
+| ------------- | ------ |
+| id            | PM Int |
+| category_name | String |
+
+## GET /api/getAllIngredientCategories
+
+### Parameters
+
+NONE
+
+### Response <Array>
+
+| Name          | Type   |
+| ------------- | ------ |
+| id            | PM Int |
+| category_name | String |
+
+## GET /api/getIngredientCategoryById/:id
+
+### Parameters
+
+NONE
+
+### Response
+
+| Name          | Type   |
+| ------------- | ------ |
+| id            | PM Int |
+| category_name | String |
+
+## GET /api/getIngredientCategoryByName
+
+### Parameters
+
+| Name          | Type   |
+| ------------- | ------ |
+| category_name | String |
+
+### Response
+
+| Name          | Type   |
+| ------------- | ------ |
+| id            | PM Int |
+| category_name | String |

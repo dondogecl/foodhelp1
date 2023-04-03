@@ -1,7 +1,7 @@
 const sql = require('../sql');
 const { ingredientSchema } = require('../schemas');
 
-exports.getAllIngredients = async (req, res, next) => {
+exports.getAllIngredients = async (req, res) => {
   const result = await sql.findAllIngredients();
   res.json(result);
 };
