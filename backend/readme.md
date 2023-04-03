@@ -141,9 +141,52 @@ NONE
 
 ### Parameters
 
+| Name | Type   |
+| ---- | ------ |
+| name | String |
+
+### Response
+
 | Name          | Type   |
 | ------------- | ------ |
+| id            | PM Int |
 | category_name | String |
+
+## POST /api/addRecipeCategory
+
+### Parameters
+
+| Name          | Type                    |
+| ------------- | ----------------------- |
+| category_name | String max(50) Required |
+
+### Response <Array>
+
+| Name          | Type   |
+| ------------- | ------ |
+| id            | PM Int |
+| category_name | String |
+
+## GET /api/getRecipeCategoryById/:id
+
+### Parameters
+
+NONE
+
+### Response
+
+| Name          | Type   |
+| ------------- | ------ |
+| id            | PM Int |
+| category_name | String |
+
+## GET /api/getRecipeCategoryByName
+
+### Parameters
+
+| Name | Type   |
+| ---- | ------ |
+| name | String |
 
 ### Response
 

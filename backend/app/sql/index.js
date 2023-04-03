@@ -16,6 +16,7 @@ const {
   findAllRecipeCategories,
   findRecipeCategoryById,
   findRecipeCategoryByName,
+  insertRecipeCategory,
 } = require('./tables/recipeCategory');
 
 const {
@@ -42,6 +43,7 @@ module.exports = {
   findAllRecipeCategories,
   findRecipeCategoryById,
   findRecipeCategoryByName,
+  insertRecipeCategory,
   /* recipe.js */
   findAllRecipes,
   findRecipeById,
