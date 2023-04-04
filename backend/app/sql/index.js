@@ -9,12 +9,14 @@ const {
   findAllIngredientCategories,
   findIngredientCategoryById,
   findIngredientCategoryByName,
+  insertIngredientCategory,
 } = require('./tables/ingredientCategory');
 
 const {
   findAllRecipeCategories,
   findRecipeCategoryById,
   findRecipeCategoryByName,
+  insertRecipeCategory,
 } = require('./tables/recipeCategory');
 
 const {
@@ -36,10 +38,12 @@ module.exports = {
   findAllIngredientCategories,
   findIngredientCategoryById,
   findIngredientCategoryByName,
+  insertIngredientCategory,
   /* recipeCategory.js */
   findAllRecipeCategories,
   findRecipeCategoryById,
   findRecipeCategoryByName,
+  insertRecipeCategory,
   /* recipe.js */
   findAllRecipes,
   findRecipeById,

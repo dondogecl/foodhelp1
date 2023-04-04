@@ -25,8 +25,19 @@ async function findRecipeCategoryByName(name) {
   return row;
 }
 
+async function insertRecipeCategory(recipeCategory) {
+  const { category_name } = recipeCategory;
+  const [insert] = await sql.query(
+    `INSERT INTO recipe_categories (category_name)
+     VALUES (?)`,
+    [category_name]
+  );
+  return insert;
+}
+
 module.exports = {
   findAllRecipeCategories,
   findRecipeCategoryById,
   findRecipeCategoryByName,
+  insertRecipeCategory,
 };
