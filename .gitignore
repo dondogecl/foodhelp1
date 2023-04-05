@@ -42,6 +42,7 @@ jspm_packages
 secrets/
 .history/
 
+
 # ignore all .env files
 *.env
 env.js

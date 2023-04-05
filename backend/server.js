@@ -3,6 +3,7 @@ const config = require('./app/config/env');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('express-async-errors');
 
 app.use(
   bodyParser.urlencoded({
@@ -12,9 +13,8 @@ app.use(
 app.use(bodyParser.json());
 app.use(cors());
 
-require('./app/routes/routes.index')(app);
-require('./app/routes/routes.recipes')(app);
-require('./app/routes/routes.errors')(app);
+require('./app/routes/recipes')(app);
+require('./app/routes/errors')(app);
 
 app.listen(config.PORT, () =>
   console.log(`App listening on PORT:${config.PORT}...`)
