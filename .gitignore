@@ -41,3 +41,10 @@ jspm_packages
 # more custom ignore
 secrets/
 .history/
+
+# ignore all .env files
+*.env
+env.js
+
+# node local config ignore
+package-lock.json
