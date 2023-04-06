@@ -7,6 +7,7 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import HomeGuest from "./components/HomeGuest/HomeGuest";
 import CreateRecipe from "./components/createRecipe/CreateRecipe";
+import Login from "./components/login/Login";
 
 function Main() {
   return (
@@ -15,6 +16,7 @@ function Main() {
       <Routes>
         <Route path="/" element={<HomeGuest />} />
         <Route path="/create-recipe" element={<CreateRecipe />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />
     </BrowserRouter>

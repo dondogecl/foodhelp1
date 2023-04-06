@@ -42,7 +42,7 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item px-2">
-                <Link className="btn btn-primary" to="#">
+                <Link className="btn btn-primary" to="/login">
                   Log In
                 </Link>
               </li>
