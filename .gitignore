@@ -49,3 +49,5 @@ env.js
 
 # node local config ignore
 package-lock.json
+backend/package-lock.json
+frontend/package-lock.json
