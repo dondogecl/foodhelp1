@@ -28,6 +28,8 @@ const {
   findRecipeIngredientsById,
 } = require('./tables/recipe');
 
+const { insertRecipeItem } = require('./tables/recipe_items');
+
 module.exports = {
   /* ingredient.js */
   findIngredientById,
@@ -51,4 +53,6 @@ module.exports = {
   deleteRecipeById,
   insertNewRecipe,
   findRecipeIngredientsById,
+  /* recipe_item */
+  insertRecipeItem,
 };

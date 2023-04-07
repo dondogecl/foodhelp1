@@ -1,5 +1,68 @@
 #API
 
+## POST /api/addRecipe
+
+### Parameters
+
+| Name               | Type       | Description       |
+| ------------------ | ---------- | ----------------- |
+| name               | String     | max(50) Required. |
+| recipe_categoryid  | Int        | Required.         |
+| recipe_photo       | String     | max(50) Required. |
+| recipe_description | String     | Required.         |
+| ingredientIds      | Array<Int> | FK Required.      |
+
+### Response
+
+| Name               | Type              |
+| ------------------ | ----------------- |
+| id                 | PM Int            |
+| name               | String            |
+| recipe_categoryid  | FK Int            |
+| likes              | Int               |
+| dislike            | number            |
+| recipe_photo       | String            |
+| recipe_description | String            |
+| ingredients        | Array<Ingredient> |
+
+## GET /api/getRecipeById/:id
+
+### Parameters
+
+NONE
+
+### Response
+
+| Name               | Type              |
+| ------------------ | ----------------- |
+| id                 | PM Int            |
+| name               | String            |
+| recipe_categoryid  | FK Int            |
+| likes              | Int               |
+| dislike            | number            |
+| recipe_photo       | String            |
+| recipe_description | String            |
+| ingredients        | Array<Ingredient> |
+
+## GET /api/getAllRecipes
+
+### Parameters
+
+NONE
+
+### Response <Array>
+
+| Name               | Type              |
+| ------------------ | ----------------- |
+| id                 | PM Int            |
+| name               | String            |
+| recipe_categoryid  | FK Int            |
+| likes              | Int               |
+| dislike            | number            |
+| recipe_photo       | String            |
+| recipe_description | String            |
+| ingredients        | Array<Ingredient> |
+
 ## POST /api/addIngredient
 
 Creates a new Ingredient.

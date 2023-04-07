@@ -19,6 +19,12 @@ const {
   addRecipeCategory,
 } = require('../controllers/recipeCategory');
 
+const {
+  getRecipeById,
+  getAllRecipes,
+  addRecipe,
+} = require('../controllers/recipe');
+
 module.exports = function (app) {
   app.get('/api/getAllIngredients', getAllIngredients);
   app.get('/api/getIngredientById/:id', getIngredientById);
@@ -34,4 +40,8 @@ module.exports = function (app) {
   app.get('/api/getRecipeCategoryById/:id', getRecipeCategoryById);
   app.get('/api/getRecipeCategoryByName', getRecipeCategoryByName);
   app.post('/api/addRecipeCategory', addRecipeCategory);
+
+  app.get('/api/getRecipeById/:id', getRecipeById);
+  app.get('/api/getAllRecipes', getAllRecipes);
+  app.post('/api/addRecipe', addRecipe);
 };

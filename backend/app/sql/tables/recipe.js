@@ -2,7 +2,7 @@ const sql = require('../../config/database');
 
 async function findRecipeIngredientsById(id) {
   const [rows] = await sql.query(
-    `SELECT ri.id, r.name as recipe_name, i.name as ingredient_name, category_name, calories, price
+    `SELECT ri.id, i.name as ingredient_name, category_name, calories, price
     FROM recipes r
     JOIN recipe_items ri ON r.id = ri.recipe_id
     JOIN ingredients i ON ri.ingredient_id = i.id
