@@ -35,6 +35,7 @@ exports.getIngredientByName = async (req, res, next) => {
 };
 
 exports.addIngredient = async (req, res, next) => {
+  // FIXME:
   const { error, value } = ingredientSchema.validate(req.body);
 
   if (error) {

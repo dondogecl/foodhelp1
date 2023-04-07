@@ -1,73 +1,74 @@
 const sql = require('../sql');
-const { ingredientSchema, recipeSchema } = require('../validation/joi');
+const { recipeSchema } = require('../schemas');
 
 exports.addRecipe = async (req, res, next) => {
-  try {
-    const { error, value } = recipeSchema.validate(req.body);
+  const { error, value: body } = recipeSchema.validate(req.body);
 
-    if (error) {
-      res.status(400);
-      next(new Error(error.details[0].message));
-    }
-
-    const { name, recipe_categoryid, recipe_photo, recipe_description } = value;
-
-    // Awaiting frontend confirmation
-    const [result] = await sql.insertNewRecipe(
-      name,
-      recipe_categoryid,
-      recipe_photo,
-      recipe_description
-    );
-    const recipe = await sql.getRecipe(result.insertId);
-    res.json(recipe);
-  } catch (error) {
-    next(error);
+  if (error) {
+    res.status(400);
+    return next(new Error(error.details[0].message));
   }
+
+  if (!(await sql.findRecipeCategoryById(body.recipe_categoryid))) {
+    res.status(400);
+    return next(new Error('recipeCategory does not exist'));
+  }
+
+  const ingredients = await Promise.all(
+    body.ingredientIds.map(async (id) => {
+      const ingredient = await sql.findIngredientById(id);
+      if (!ingredient) {
+        res.status(400);
+        return next(
+          new Error('At least one of the ingredients does not exist')
+        );
+      }
+      return ingredient;
+    })
+  );
+
+  const { insertId } = await sql.insertNewRecipe(body);
+  await Promise.all(
+    ingredients.map(async (ingredient) => {
+      await sql.insertRecipeItem({
+        recipe_id: insertId,
+        ingredient_id: ingredient.id,
+      });
+    })
+  );
+
+  const recipe = await sql.findRecipeById(insertId);
+  res.json(recipe);
 };
 
 exports.getAllRecipes = async (req, res, next) => {
-  try {
-    const result = await sql.getAllRecipes();
-    res.json(result);
-  } catch (error) {
-    next(error);
-  }
+  const recipes = await sql.findAllRecipes();
+
+  const recipesWithIngredients = await Promise.all(
+    recipes.map(async (recipe) => {
+      const ingredients = await sql.findRecipeIngredientsById(recipe.id);
+      return { ...recipe, ingredients: ingredients };
+    })
+  );
+
+  res.json(recipesWithIngredients);
 };
 
-exports.getRecipeIngredients = async (req, res, next) => {
-  try {
-    const id = null;
-    const result = await sql.findRecipeIngredientsById(id);
-    res.json(result);
-  } catch (error) {
-    next(error);
-  }
-};
+exports.getRecipeById = async (req, res, next) => {
+  const { id } = req.params;
 
-exports.getAllRecipeCategories = async (req, res, next) => {
-  try {
-    const result = await sql.getIngredientCategories();
-    res.json(result);
-  } catch (error) {
-    next(error);
+  if (!id) {
+    res.status(400);
+    return next(new Error('recipeId is invalid'));
   }
-};
 
-exports.getRecipeCategory = async (req, res, next) => {
-  try {
-    const { categoryId } = req.params;
-    if (!categoryId) {
-      res.status(400);
-      next(new Error('categoryId is invalid'));
-    }
+  const recipe = await sql.findRecipeById(id);
 
-    const [result] = await sql.getRecipeCategory(categoryId);
-    if (!result) {
-      next(new Error("category doesn't exist"));
-    }
-    res.json(result);
-  } catch (error) {
-    next(error);
+  if (!recipe) {
+    res.status(400);
+    return next(new Error('recipe does not exist'));
   }
+
+  const ingredients = await sql.findRecipeIngredientsById(id);
+  res.json({ ...recipe, ingredients: ingredients });
 };
