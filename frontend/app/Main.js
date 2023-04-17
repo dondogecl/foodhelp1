@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route  } from "react-router-dom";
 import Axios from "axios";
 
 // set default path for backend
@@ -31,9 +31,12 @@ function Main() {
         <Route path="/search-recipe" element={<SearchRecipe />} />
         <Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>} />
         <Route path="/register" element={<Register />} />
+        <Route path="/browse" element={<BrowseRecipes />} />
       </Routes>
-      <BrowseRecipes /> 
+         
+      
       <Footer />
+      
     </BrowserRouter>
   );
 }

@@ -31,7 +31,7 @@ function HeaderLoggedOut(props) {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto text-center">
               <li className="nav-item px-2">
-                <Link className="nav-link" to="#">
+                <Link className="nav-link" to="/browse">
                   Browse Recipes
                 </Link>
               </li>

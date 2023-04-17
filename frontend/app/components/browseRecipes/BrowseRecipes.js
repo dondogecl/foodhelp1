@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import {Remarkable} from 'remarkable';
+import ReactMarkdown from 'react-markdown'
+
 
 
 function BrowseRecipes() {
@@ -26,7 +27,6 @@ function BrowseRecipes() {
     return `https://${bucketName}.s3.amazonaws.com/${key}`;
   }
 
-
   
   return (
     <div className="container mt-3">
@@ -39,8 +39,9 @@ function BrowseRecipes() {
               <div className="card-body">
                 <h5 className="card-title">{recipe.name}</h5>
                 <h6 className="card-subtitle mb-2 text-muted">{recipe.category_name}</h6>
-                <p className="card-text">
-                    </p>
+                <div className="card-text">
+                    <ReactMarkdown>{recipe.recipe_description.slice(0,80)}</ReactMarkdown>...
+                    </div>
               </div>
               <div className="card-footer">
                 <small className="text-muted">
