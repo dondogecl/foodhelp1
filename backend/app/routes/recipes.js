@@ -37,6 +37,7 @@ const {
   getRecipeById,
   getAllRecipes,
   addRecipe,
+  deleteRecipeById
 } = require('../controllers/recipe');
 
 module.exports = function (app) {
@@ -58,6 +59,8 @@ module.exports = function (app) {
   app.get('/api/getRecipeById/:id', getRecipeById);
   app.get('/api/getAllRecipes', getAllRecipes);
   app.post('/api/addRecipe', addRecipe);
+  // Delete recipe by ID
+  app.delete("/api/:id", deleteRecipeById);
 
   app.get('/api/testa/', (req, res) => {
     // send json response with a message

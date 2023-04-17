@@ -42,14 +42,13 @@ async function findRecipeByName(name) {
   return row;
 }
 
-//Delete query from the Recipe Table by id - DAN
 async function deleteRecipeById(id) {
   const [result] = await sql.query(
     `DELETE FROM recipes 
     WHERE id=?`,
     [id]
-  ); //Needs to be updated with the corresponding values field from the user outputs in the form and the particular id
-  return result;
+  );
+  return result.affectedRows > 0;
 }
 
 async function insertNewRecipe(recipe) {

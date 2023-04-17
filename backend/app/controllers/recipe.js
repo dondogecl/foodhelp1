@@ -72,3 +72,26 @@ exports.getRecipeById = async (req, res, next) => {
   const ingredients = await sql.findRecipeIngredientsById(id);
   res.json({ ...recipe, ingredients: ingredients });
 };
+
+exports.deleteRecipeById = async (req, res, next) => {
+  console.log("delete called");
+  const { id } = req.params;
+
+  if (!id) {
+    res.status(400);
+    return next(new Error('recipeId is invalid'));
+  }
+  console.log("delete step 2 id: "  + id);
+  try {
+    const deletedRecipe = await sql.deleteRecipeById(id);
+    if (!deletedRecipe) {
+      res.status(404).json({ message: 'Recipe not found' });
+      console.log("recipe not found");
+      return;
+    }
+    res.status(200).json({ message: 'Recipe deleted successfully', deletedRecipe });
+  } catch (error) {
+    console.log("error: " + error);
+    res.status(500).json({ error: `${error}` });
+  }
+};
