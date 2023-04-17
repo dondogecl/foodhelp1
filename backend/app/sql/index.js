@@ -36,7 +36,7 @@ const {
   register,
   findUserByEmail,
   getAllUsers,
-  login
+  login,
 } = require('./tables/user');
 
 module.exports = {
@@ -70,5 +70,5 @@ module.exports = {
   register,
   findUserByEmail,
   getAllUsers,
-  login
+  login,
 };

@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const sql = require('../../config/database');
 
 async function findUserById(id) {
@@ -49,21 +50,23 @@ async function getAllUsers() {
 }
 
 async function login(email, password) {
-  const [[row]] = await sql.query(
-    `SELECT id, username, email, password
-     FROM users
-     WHERE email = ?`,
-    [email]
-  );
-  if (!row) {
+  const user = await findUserByEmail(email);
+  if (!user) {
     return null;
   }
-  const isMatch = await bcrypt.compare(password, row.password);
-  if (!isMatch) {
+  // const isMatch = await bcrypt.compare(password, user.password);
+  // if (!isMatch) {
+  //   return null;
+  // }
+  // compare password with user.password without bcrypt
+  if (password !== user.password) {
     return null;
   }
-  delete row.password;
-  return row;
+  
+  //const isMatch = await 
+
+  delete user.password;
+  return user;
 }
 
 module.exports = {

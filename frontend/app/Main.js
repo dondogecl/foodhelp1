@@ -14,16 +14,21 @@ import CreateRecipe from "./components/createRecipe/CreateRecipe";
 import SearchRecipe from "./components/searchRecipe/SearchRecipe";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
+import Home from "./components/home/Home";
+import HeaderLoggedIn from "./components/headerLoggedIn/HeaderLoggedIn";
+import HeaderLoggedOut from "./components/headerLoggedOut/HeaderLoggedOut";
 
 function Main() {
+  // loggedin state
+  const [loggedIn, setLoggedIn] = React.useState(Boolean(localStorage.getItem("token")));
   return (
     <BrowserRouter>
-      <Header />
+      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <Routes>
-        <Route path="/" element={<HomeGuest />} />
+        <Route path="/" element={ loggedIn ? <Home /> : <HomeGuest />} />
         <Route path="/create-recipe" element={<CreateRecipe />} />
         <Route path="/search-recipe" element={<SearchRecipe />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>} />
         <Route path="/register" element={<Register />} />
       </Routes>
       <Footer />

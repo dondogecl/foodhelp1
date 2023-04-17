@@ -2,9 +2,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const pool = require('../config/database');
+const JWT_SECRET = require('../config/env').JWT_SECRET;
 
 const { userSchema } = require('../schemas');
-const { register, findUserByEmail, findUserById, getAllUsers } = require('../sql/tables/user');
+const { register, findUserByEmail, findUserById, getAllUsers, login } = require('../sql/tables/user');
+
+
 
 
 exports.registerUser = async function (req, res) {
@@ -30,25 +33,14 @@ exports.registerUser = async function (req, res) {
 exports.loginUser = async (req, res) => {
   // Extract user input data
   const { email, password } = req.body;
-
+    
   try {
-    // Check if user exists
-    const [user] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+    const user = await login(email, password);
     if (!user) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
-
-    // Check if password is correct
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return res.status(401).json({ message: 'Invalid email or password' });
-    }
-
-    // Generate JWT token
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    // Return token
-    return res.status(200).json({ token });
+    const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' });
+    return res.status(200).json({ token, userId: user.id, username: user.username });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });

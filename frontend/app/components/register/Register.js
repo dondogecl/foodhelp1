@@ -30,32 +30,21 @@ function Register() {
       // console.log the response from the request
       console.log(response.data);
       console.log("User registered");
-      setMessage(response.data.message);
+      // redirect to login page
+      window.location = "/login";
     } catch (error) {
       if (error.response) {
         console.log(error.response.data.message); // log the error message
-        // display the error message to the user
-        setMessage(error.response.data.message);
-        //alert(`Error: ${error.response.data.message}`);
+        alert(`Error: ${error.response.data.message}`);
       } else {
         console.log(error);
-        setMessage(error.response.data.message);
+        alert(`Error: ${error}`);
       }
     }
   }
 
   return (
     <>
-      {message && message.type === "success" && (
-        <div className="alert alert-success text-center floating-alert shadow-sm">
-          {message.text}
-        </div>
-      )}
-      {message && message.type === "error" && (
-        <div className="alert alert-danger text-center floating-alert shadow-sm">
-          {message.text}
-        </div>
-      )}
       <div className="container my-5">
         <div className="text-center">
           <form className="form-signin" onSubmit={handleSubmit}>
