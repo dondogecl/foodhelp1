@@ -11,6 +11,12 @@ exports.registerUser = async function (req, res) {
   console.log("register user controller");
   try {
     const user = req.body;
+    // Check if the user exists by email
+    const existingUser = await findUserByEmail(user.email);
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists with that email.' });
+    }
+    // If the user doesn't exist, register them
     await register(user);
     res.status(200).send('User registered successfully!');
   } catch (err) {
