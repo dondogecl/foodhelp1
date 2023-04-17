@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import ReactMarkdown from 'react-markdown'
-
-
+import ReactMarkdown from "react-markdown";
+import { Link } from "react-router-dom";
 
 function BrowseRecipes() {
   const [recipes, setRecipes] = useState([]);
@@ -23,12 +22,12 @@ function BrowseRecipes() {
   // function to parse s3 urls
   function getS3PublicUrl(s3Url) {
     if (s3Url.split(":")[0] === "https") {
-        return s3Url;
+      return s3Url;
     }
     //check 2 first characters
-    const urlParts = s3Url.split('/');
+    const urlParts = s3Url.split("/");
     const bucketName = urlParts[2];
-    const key = urlParts.slice(3).join('/');
+    const key = urlParts.slice(3).join("/");
     return `https://${bucketName}.s3.amazonaws.com/${key}`;
   }
 
@@ -37,7 +36,6 @@ function BrowseRecipes() {
     recipe.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  
   return (
     <div className="container mt-3">
       <h2>Browse Recipes</h2>
@@ -54,8 +52,8 @@ function BrowseRecipes() {
             />
           </div>
         </div>
-        </div>
-        <div className="row mt-3">
+      </div>
+      <div className="row mt-3">
         {filteredRecipes.map((recipe) => (
           <div key={recipe.id} className="col-md-4 mb-3">
             <div className="card h-100">
@@ -65,7 +63,9 @@ function BrowseRecipes() {
                 alt="Recipe"
               />
               <div className="card-body">
-                <h5 className="card-title">{recipe.name}</h5>
+                <Link to={`/recipes/${recipe.id}`}>
+                  <h5 className="card-title">{recipe.name}</h5>
+                </Link>
                 <h6 className="card-subtitle mb-2 text-muted">
                   {recipe.category_name}
                 </h6>
@@ -80,10 +80,7 @@ function BrowseRecipes() {
                 <small className="text-muted">
                   <span className="me-2">{recipe.likes} likes</span>
                   <span>
-                    {recipe.ingredients.reduce(
-                      (acc, i) => acc + i.calories,
-                      0
-                    )}{" "}
+                    {recipe.ingredients.reduce((acc, i) => acc + i.calories, 0)}{" "}
                     kcal
                   </span>
                 </small>

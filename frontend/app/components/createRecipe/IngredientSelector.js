@@ -56,7 +56,8 @@ function IngredientSelector() {
           </option>
         ))}
       </select>
-      <button onClick={handleAdd}>Add</button>
+      {/*<button onClick={handleAdd}>Add</button>*/}
+      <a href="#" onClick={handleAdd}>Add</a>
       <div>
         <p>Selected ingredients:</p>
         {selectedIngredients.map((i) => (

@@ -16,6 +16,7 @@ import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import Home from "./components/home/Home";
 import BrowseRecipes from "./components/browseRecipes/BrowseRecipes";
+import ViewRecipe from "./components/viewRecipe/viewRecipe";
 
 function Main() {
   // loggedin state
@@ -30,6 +31,7 @@ function Main() {
         <Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/browse" element={<BrowseRecipes />} />
+        <Route path="/recipes/:id" component={ViewRecipe} />
       </Routes>
          
       

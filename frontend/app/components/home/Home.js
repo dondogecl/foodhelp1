@@ -1,16 +1,10 @@
 import React, { useEffect } from "react"
+import BrowseRecipes from "../browseRecipes/BrowseRecipes"
 
 function Home() {
   return (
     <>
-      <div>
-        <h1>View all recipes</h1>
-      </div>
-      <ol>
-        <li>Recipe 1</li>
-        <li>Recipe 2</li>
-        <li>Recipe 3</li>
-      </ol>
+    <BrowseRecipes /> 
     </>
   )
 }

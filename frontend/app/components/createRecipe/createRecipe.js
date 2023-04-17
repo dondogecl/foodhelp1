@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import AWS from "aws-sdk";
 import env from "/.env";
@@ -6,12 +7,15 @@ import env from "/.env";
 // imports of other components
 import IngredientSelector from "./IngredientSelector";
 
-const S3_BUCKET = env.REACT_APP_S3_BUCKET_NAME;
-const REGION = env.REACT_APP_AWS_REGION;
+const { REACT_APP_AWS_BUCKET_NAME } = env;
+const { REACT_APP_AWS_REGION } = env;
+const { REACT_APP_AWS_ACCESS_KEY_ID } = env;
+const { REACT_APP_AWS_SECRET_ACCESS_KEY } = env;
+console.log(REACT_APP_AWS_BUCKET_NAME);
 
 AWS.config.update({
-  accessKeyId: env.REACT_APP_AWS_ACCESS_KEY_ID,
-  secretAccessKey: env.REACT_APP_AWS_SECRET_ACCESS_KEY
+  accessKeyId: REACT_APP_AWS_ACCESS_KEY_ID,
+  secretAccessKey: REACT_APP_AWS_SECRET_ACCESS_KEY
 })
 
 function CreateRecipe(props) {
@@ -22,6 +26,7 @@ function CreateRecipe(props) {
   const [recipeDescription, setRecipeDescription] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]); // ids
+  const navigate = useNavigate();
 
   
   // handlers for the form
@@ -49,34 +54,40 @@ function CreateRecipe(props) {
   // handler for the submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(env.REACT_APP_S3_BUCKET_NAME)
+    
     // handle form submission
+    
     try {
       // Upload image to S3
     const s3Params = {
-      Bucket: env.REACT_APP_S3_BUCKET_NAME,
+      Bucket: REACT_APP_AWS_BUCKET_NAME,
       Key: recipePhoto.name,
       Body: recipePhoto,
       ContentType: recipePhoto.type,
-      ACL: "public-read",
     };
+
     const s3Response = await s3.upload(s3Params).promise();
     console.log('Image uploaded to S3:', s3Response.Location);
-    photoURL = s3Response.Location;
+    const recipe_photo_ = s3Response.Location;
+    const name_ = name;
+    console.log(`recipePhoto: ${recipe_photo_}`);
 
-    console.log(`submit : ${name} ${recipeCategoryid} ${recipePhoto} ${recipeDescription} ${selectedIngredients}`)
-
+    //console.log(`submit : ${name} ${recipeCategoryid} ${recipePhoto} ${recipeDescription} ${selectedIngredients}`)
       const response = await Axios.post("/api/addRecipe", {
-        name: name,
-        recipeCategory: recipeCategoryid,
-        photoURL: recipe_photo,
-        recipeDescription: recipe_description,
-        ingredients: ingredientIds,
+        name: name_,
+        recipe_categoryid: recipeCategoryid,
+        recipe_photo: recipe_photo_,
+        recipe_description: recipeDescription,
+        ingredientIds: selectedIngredients,
       });
+      console.log(`all state vars: ${name} ${recipeCategoryid} ${recipePhoto} ${recipeDescription} ${selectedIngredients}`)
       console.log(response.data);
+      alert("Recipe added successfully")
+      navigate(`/post/${response.data}`);
       // clear form inputs here
     } catch (error) {
-      console.log(error);
+      console.log(error)
+      //return JSON.stringify(error);
       // handle error here
     }
   };
@@ -95,16 +106,16 @@ function CreateRecipe(props) {
   // upload photos
   const s3 = new AWS.S3({
     // credentials:
-    bucketName: env.REACT_APP_S3_BUCKET_NAME,
-    accessKeyId: env.REACT_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-    region: env.REACT_APP_AWS_REGION,
+    bucketName: REACT_APP_AWS_BUCKET_NAME,
+    accessKeyId: REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: REACT_APP_AWS_SECRET_ACCESS_KEY,
+    region: REACT_APP_AWS_REGION,
 
   });
 
   // handler for the selected ingredients from IngredientSelector
   const handleSelectedIngredients = (selectedIngredients) => {
-    setIngredients(selectedIngredients);
+    setSelectedIngredients(selectedIngredients);
   };
 
 
