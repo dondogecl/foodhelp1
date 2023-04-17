@@ -17,6 +17,7 @@ import Register from "./components/register/Register";
 import Home from "./components/home/Home";
 import HeaderLoggedIn from "./components/headerLoggedIn/HeaderLoggedIn";
 import HeaderLoggedOut from "./components/headerLoggedOut/HeaderLoggedOut";
+import BrowseRecipes from "./components/browseRecipes/BrowseRecipes";
 
 function Main() {
   // loggedin state
@@ -31,6 +32,7 @@ function Main() {
         <Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>} />
         <Route path="/register" element={<Register />} />
       </Routes>
+      <BrowseRecipes /> 
       <Footer />
     </BrowserRouter>
   );
