@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import ReactMarkdown from "react-markdown";
-
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function ViewRecipe() {
   const { id } = useParams(); // get the recipe ID from the URL
-
+  const navigate = useNavigate();
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
@@ -37,6 +36,20 @@ function ViewRecipe() {
     return `https://${bucketName}.s3.amazonaws.com/${key}`;
   }
 
+  function handleDelete() {
+    Axios.delete(`/api/${id}`)
+      .then((response) => {
+        console.log("Recipe deleted");
+        // response
+        console.log(response)
+        // Go to the home page
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   return (
     <div className="container mt-3">
       <h2>{recipe.name}</h2>
@@ -59,6 +72,10 @@ function ViewRecipe() {
       <ReactMarkdown>{recipe.recipe_description}</ReactMarkdown>
       <div className="mt-3">
         <small className="text-muted">{recipe.likes} likes</small>
+        <div className="d-flex justify-content-between align-items-center mt-3">
+        <button className="btn btn-secondary">Edit</button>
+        <button className="btn btn-danger" onClick={() => handleDelete(recipe.id)}>Delete</button>
+      </div>
       </div>
     </div>
   );

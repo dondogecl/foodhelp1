@@ -83,7 +83,7 @@ function CreateRecipe(props) {
       console.log(`all state vars: ${name} ${recipeCategoryid} ${recipePhoto} ${recipeDescription} ${selectedIngredients}`)
       console.log(response.data);
       alert("Recipe added successfully")
-      navigate(`/post/${response.data}`);
+      navigate('/browse');
       // clear form inputs here
     } catch (error) {
       console.log(error)
