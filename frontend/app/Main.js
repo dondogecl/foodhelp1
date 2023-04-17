@@ -31,7 +31,7 @@ function Main() {
         <Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/browse" element={<BrowseRecipes />} />
-        <Route path="/recipes/:id" component={ViewRecipe} />
+        <Route path="/recipes/:id" element={<ViewRecipe /> } />
       </Routes>
          
       
