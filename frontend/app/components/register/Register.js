@@ -1,43 +1,69 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 
+import logoBig from '/public/images/logo2.png';
+
 function Register() {
   // manage state
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState(null); // for error messages
 
   // handle changes
   const handleUsernameChange = (e) => setUsername(e.target.value);
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     console.log(
       `username: ${username}, email: ${email}, password: ${password}`
     );
     // register the user
     try {
-        Axios.post("/register", { username, email, password });
-        console.log("User registered");
+      const response = await Axios.post("/api/register", {
+        username,
+        email,
+        password,
+      });
+      // console.log the response from the request
+      console.log(response.data);
+      console.log("User registered");
+      setMessage(response.data.message);
     } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.message); // log the error message
+        // display the error message to the user
+        setMessage(error.response.data.message);
+        //alert(`Error: ${error.response.data.message}`);
+      } else {
         console.log(error);
+        setMessage(error.response.data.message);
+      }
     }
-    
   }
 
   return (
     <>
+      {message && message.type === "success" && (
+        <div className="alert alert-success text-center floating-alert shadow-sm">
+          {message.text}
+        </div>
+      )}
+      {message && message.type === "error" && (
+        <div className="alert alert-danger text-center floating-alert shadow-sm">
+          {message.text}
+        </div>
+      )}
       <div className="container my-5">
         <div className="text-center">
           <form className="form-signin" onSubmit={handleSubmit}>
             <img
-              className="mb-4"
-              src="public/images/logo.png"
+              className="mb-4 img-fluid"
+              src={logoBig}
               alt="Food"
-              width="72"
-              height="72"
+              
             />
             <h1 className="h3 mb-3 font-weight-normal">Create an account</h1>
             <label htmlFor="inputUsername" className="sr-only">
@@ -46,19 +72,19 @@ function Register() {
             <input
               type="text"
               id="inputUsername"
-              className="form-control"
+              className="form-control mt-5"
               placeholder="unique username"
               value={username}
               onChange={handleUsernameChange}
               required
             />
-            <label htmlFor="inputEmail" className="sr-only">
+            <label htmlFor="inputEmail" className="sr-only mt-2 mb-2">
               Email address
             </label>
             <input
               type="email"
               id="inputEmail"
-              className="form-control"
+              className="form-control mt-2 mb-2"
               placeholder="Email address"
               value={email}
               onChange={handleEmailChange}
@@ -70,7 +96,7 @@ function Register() {
             <input
               type="password"
               id="inputPassword"
-              className="form-control"
+              className="form-control mt-2 mb-5"
               placeholder="Password"
               value={password}
               onChange={handlePasswordChange}

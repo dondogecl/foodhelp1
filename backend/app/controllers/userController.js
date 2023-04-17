@@ -8,7 +8,6 @@ const { register, findUserByEmail, findUserById, getAllUsers } = require('../sql
 
 
 exports.registerUser = async function (req, res) {
-  console.log("register user controller");
   try {
     const user = req.body;
     // Check if the user exists by email
@@ -18,10 +17,10 @@ exports.registerUser = async function (req, res) {
     }
     // If the user doesn't exist, register them
     await register(user);
-    res.status(200).send('User registered successfully!');
+    res.status(200).send({message: 'User registered successfully!'});
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error registering user.');
+    res.status(500).send({message: 'Error registering user.'});
   }
 }
 

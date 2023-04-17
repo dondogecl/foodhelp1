@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Axios from "axios";
 
 // set default path for backend
-Axios.defaults.baseURL = "http://localhost:8080";
+Axios.defaults.baseURL = "http://localhost:8081";
 
 // Components
 import Header from "./components/header/Header";
