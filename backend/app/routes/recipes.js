@@ -1,3 +1,5 @@
+const { check } = require('express-validator');
+
 const {
   getAllIngredients,
   getIngredientById,
@@ -18,6 +20,18 @@ const {
   getRecipeCategoryByName,
   addRecipeCategory,
 } = require('../controllers/recipeCategory');
+
+// trick
+
+const {
+  registerUser,
+  loginUser,
+  getUserById,
+  getAllUsers,
+  getUserByEmail
+} = require('../controllers/userController');
+
+//trick
 
 const {
   getRecipeById,
@@ -44,4 +58,31 @@ module.exports = function (app) {
   app.get('/api/getRecipeById/:id', getRecipeById);
   app.get('/api/getAllRecipes', getAllRecipes);
   app.post('/api/addRecipe', addRecipe);
+
+  app.get('/api/testa/', (req, res) => {
+    // send json response with a message
+    res.json({ message: 'Hello World!2' });
+  });
+
+  app.post('/api/register', [
+    check('username').notEmpty().withMessage('Username is required'),
+    check('email').isEmail().withMessage('Invalid email address'),
+    check('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
+  ], registerUser);
+
+  app.post('/api/login', loginUser);
+
+  app.get('/api/user/:id/', getUserById);
+  
+  app.get('/api/user/', getAllUsers);
+
+  app.get('/api/test/', (req, res) => {
+    // send json response with a message
+    res.json({ message: 'Hello World!' });
+  });
+
+  // find user by email
+  app.get('/api/user/email/:email', getUserByEmail);
+
+  //app.post('/api/user/register/', registerUser)
 };

@@ -15,6 +15,7 @@ app.use(cors());
 
 require('./app/routes/recipes')(app);
 require('./app/routes/errors')(app);
+require('./app/routes/userRoutes')(app);
 
 app.listen(config.PORT, () =>
   console.log(`App listening on PORT:${config.PORT}...`)

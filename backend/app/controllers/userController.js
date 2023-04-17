@@ -3,42 +3,24 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const pool = require('../config/database');
 
-exports.registerUser = async (req, res) => {
-  // Validate input data
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+const { userSchema } = require('../schemas');
+const { register, findUserByEmail, findUserById, getAllUsers } = require('../sql/tables/user');
 
-  // Extract user input data
-  const { username, email, password } = req.body;
 
+exports.registerUser = async function (req, res) {
+  console.log("register user controller");
   try {
-    // Check if user already exists
-    const [existingUser] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
-    if (existingUser) {
-      return res.status(409).json({ message: 'User already exists' });
-    }
-
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Insert new user into database
-    const newUser = {
-      username,
-      email,
-      password: hashedPassword,
-    };
-    await pool.query('INSERT INTO users SET ?', newUser);
-
-    // Return success message
-    return res.status(201).json({ message: 'User created successfully' });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    const user = req.body;
+    await register(user);
+    res.status(200).send('User registered successfully!');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error registering user.');
   }
-};
+}
+
+
+// end of registerUser
 
 exports.loginUser = async (req, res) => {
   // Extract user input data
@@ -65,5 +47,52 @@ exports.loginUser = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+
+exports.getUserById = async (req, res) => {
+  console.log("get user by id controller");
+
+  const userId = req.params.id;
+  console.log("userId: " + userId);
+  
+  try {
+    // Get user from database by user ID
+    const [user] = await pool.query('SELECT * FROM users WHERE id = ?', [userId]);
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Return user data
+    return res.status(200).json({ user });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const [users] = await pool.query('SELECT * FROM users');
+    return res.status(200).json({ users });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+exports.getUserByEmail = async function (req, res) {
+  try {
+    const email = req.params.email;
+    const user = await findUserByEmail(email);
+    if (!user) {
+      return res.status(404).send('User not found.');
+    }
+    res.status(200).json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error finding user.');
   }
 };

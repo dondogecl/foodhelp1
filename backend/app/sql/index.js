@@ -30,6 +30,15 @@ const {
 
 const { insertRecipeItem } = require('./tables/recipe_items');
 
+const {
+  findUserById,
+  findUserByUsername,
+  register,
+  findUserByEmail,
+  getAllUsers,
+  login
+} = require('./tables/user');
+
 module.exports = {
   /* ingredient.js */
   findIngredientById,
@@ -55,4 +64,11 @@ module.exports = {
   findRecipeIngredientsById,
   /* recipe_item */
   insertRecipeItem,
+  /* user.js */
+  findUserById,
+  findUserByUsername,
+  register,
+  findUserByEmail,
+  getAllUsers,
+  login
 };
