@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 // other imports
 import heroImage from '/public/images/hero.jpg';
+import logo from '/public/images/logo-30px.png';
 
 function Header() {
   return (
@@ -11,7 +12,7 @@ function Header() {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-            <img src="public/images/logo.png" alt="Food+ Logo" />
+            <img src={logo} alt="Food+ Logo" />
           </Link>
           <button
             className="navbar-toggler"

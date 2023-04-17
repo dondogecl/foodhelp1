@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import {Link} from "react-router-dom";
 
 // Components import
 
@@ -21,7 +22,9 @@ function HomeGuest() {
                 Looking for recipe inspiration? Need help reducing food waste?
                 You've come to the right place! Sign up now to get started.
               </p>
+              <Link to="/register">
               <button className="btn btn-primary">Register</button>
+              </Link>
             </div>
           </div>
         </div>
