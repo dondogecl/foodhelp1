@@ -22,6 +22,10 @@ function BrowseRecipes() {
 
   // function to parse s3 urls
   function getS3PublicUrl(s3Url) {
+    if (s3Url.split(":")[0] === "https") {
+        return s3Url;
+    }
+    //check 2 first characters
     const urlParts = s3Url.split('/');
     const bucketName = urlParts[2];
     const key = urlParts.slice(3).join('/');
