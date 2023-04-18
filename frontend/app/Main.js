@@ -17,6 +17,7 @@ import Register from "./components/register/Register";
 import Home from "./components/home/Home";
 import BrowseRecipes from "./components/browseRecipes/BrowseRecipes";
 import ViewRecipe from "./components/viewRecipe/viewRecipe";
+import EditRecipe from "./components/editRecipe/EditRecipe";
 
 function Main() {
   // loggedin state
@@ -32,6 +33,7 @@ function Main() {
         <Route path="/register" element={<Register />} />
         <Route path="/browse" element={<BrowseRecipes />} />
         <Route path="/recipes/:id" element={<ViewRecipe /> } />
+        <Route path="/edit-recipe/:id" element={<EditRecipe />} />
       </Routes>
          
       

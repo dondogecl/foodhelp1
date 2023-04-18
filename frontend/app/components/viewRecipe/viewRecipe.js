@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import ReactMarkdown from "react-markdown";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 function ViewRecipe() {
   const { id } = useParams(); // get the recipe ID from the URL
@@ -73,7 +73,9 @@ function ViewRecipe() {
       <div className="mt-3">
         <small className="text-muted">{recipe.likes} likes</small>
         <div className="d-flex justify-content-between align-items-center mt-3">
+        <Link to={`/edit/${recipe.id}`}>
         <button className="btn btn-secondary">Edit</button>
+        </Link>
         <button className="btn btn-danger" onClick={() => handleDelete(recipe.id)}>Delete</button>
       </div>
       </div>
